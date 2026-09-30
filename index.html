@@ -156,7 +156,35 @@ scene.add(bg);
 const galaxy = new THREE.Group(); scene.add(galaxy);
 const phrases = ["Dani 💜", "Gracias por estar aquí ✨", "Esta galaxia es para ti 🌌", "Eres una persona especial 💫", "Gracias por todos los momentos 💜"];
 const phraseCount = Math.max(phrases.length * 6, 180);
-const arms = 5, radius = 82, maxH = 22;
+// Carrito 🚗💜
+const car = new THREE.Group();
+
+// Cuerpo
+const cuerpoGeo = new THREE.BoxGeometry(1.2, 0.6, 0.6);
+const cuerpoMat = new THREE.MeshStandardMaterial({ color: 0xff4466, metalness: 0.3, roughness: 0.4 });
+const cuerpo = new THREE.Mesh(cuerpoGeo, cuerpoMat);
+cuerpo.position.y = 0.3;
+car.add(cuerpo);
+
+// Ruedas
+const ruedaGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.15, 16);
+const ruedaMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
+
+const posRuedas = [
+  [-0.5, 0.15, 0.35], [0.5, 0.15, 0.35],
+  [-0.5, 0.15, -0.35], [0.5, 0.15, -0.35]
+];
+posRuedas.forEach(p => {
+  const r = new THREE.Mesh(ruedaGeo, ruedaMat);
+  r.rotation.z = Math.PI / 2;
+  r.position.set(p[0], p[1], p[2]);
+  car.add(r);
+});
+
+// Ubicación
+car.position.set(0, 0, 10);
+scene.add(car);
+
 
 function makeTextTexture(text, size=48){
   const c=document.createElement('canvas'); c.width=1024; c.height=128;
