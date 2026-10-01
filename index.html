@@ -171,7 +171,18 @@ car.add(cuerpo);
 const ruedaGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.15, 16);
 const ruedaMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
 
-const posRuedas = [
+const posRuedas = [];
+
+posRuedas.forEach(p => {
+  const r = new THREE.Mesh(ruedaGeo, ruedaMat);
+  r.rotation.z = Math.PI / 2;
+  r.position.set(p[0], p[1], p[2]);
+  car.add(r);
+});
+
+car.position.set(0, 0, 10);
+scene.add(car);
+
   [-0.5, 0.15, 0.35], [0.5, 0.15, 0.35],
   [-0.5, 0.15, -0.35], [0.5, 0.15, -0.35]
 ];
