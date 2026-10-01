@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Galaxia para ti mi REINA BELLA DUEÑA</title>
+  <title>Galaxia para ti mi dani disfrútalo</title>
   <meta name="description" content="Galaxia interactiva de frases de cariño 💘">
   <meta property="og:title" content="Galaxia para ti">
   <meta property="og:description" content="Una galaxia interactiva con palabras de cariño 💖">
@@ -157,47 +157,8 @@ const galaxy = new THREE.Group(); scene.add(galaxy);
 const phrases = ["Dani 💜", "Gracias por estar aquí ✨", "Esta galaxia es para ti 🌌", "Eres una persona especial 💫", "Gracias por todos los momentos 💜"];
 const phraseCount = Math.max(phrases.length * 6, 180);
 const arms = 5, radius = 82, maxH = 22;
-// Carrito 🚗💜
-const car = new THREE.Group();
 
-// Cuerpo
-const cuerpoGeo = new THREE.BoxGeometry(1.2, 0.6, 0.6);
-const cuerpoMat = new THREE.MeshStandardMaterial({ color: 0xff4466, metalness: 0.3, roughness: 0.4 });
-const cuerpo = new THREE.Mesh(cuerpoGeo, cuerpoMat);
-cuerpo.position.y = 0.3;
-car.add(cuerpo);
-
-// Ruedas
-const ruedaGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.15, 16);
-const ruedaMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
-
-const posRuedas = [];
-
-posRuedas.forEach(p => {
-  const r = new THREE.Mesh(ruedaGeo, ruedaMat);
-  r.rotation.z = Math.PI / 2;
-  r.position.set(p[0], p[1], p[2]);
-  car.add(r);
-});
-
-car.position.set(0, 0, 10);
-scene.add(car);
-
-  [-0.5, 0.15, 0.35], [0.5, 0.15, 0.35],
-  [-0.5, 0.15, -0.35], [0.5, 0.15, -0.35]
-];
-posRuedas.forEach(p => {
-  const r = new THREE.Mesh(ruedaGeo, ruedaMat);
-  r.rotation.z = Math.PI / 2;
-  r.position.set(p[0], p[1], p[2]);
-  car.add(r);
-});
-
-// Ubicación
-car.position.set(0, 0, 10);
-scene.add(car);
-
-
+  
 function makeTextTexture(text, size=48){
   const c=document.createElement('canvas'); c.width=1024; c.height=128;
   const g=c.getContext('2d'); g.clearRect(0,0,c.width,c.height);
@@ -238,7 +199,18 @@ core.renderOrder=1; scene.add(core);
 
 const photonRing=new THREE.Mesh(new THREE.RingGeometry(coreR*1.05, coreR*1.18, 128), new THREE.MeshBasicMaterial({ color:0xEAAEFF, transparent:true, opacity:0.95, side:THREE.DoubleSide }));
 photonRing.rotation.x=-Math.PI/2; photonRing.renderOrder=0.5; scene.add(photonRing);
-
+const carTex = makeTextTexture("🚗", 110);
+const car = new THREE.Sprite(
+  new THREE.SpriteMaterial({
+    map: carTex,
+    transparent: true,
+    depthTest: false
+  })
+);
+car.position.set(0, 0, 0);
+car.scale.set(12, 12, 1);
+car.renderOrder = 10;
+scene.add(car);
 function makeHaloTexture(size=1024, inner=0.45){
   const c=document.createElement('canvas'); c.width=c.height=size; const g=c.getContext('2d'); const r=size/2;
   const grd=g.createRadialGradient(r,r,r*inner, r,r,r);
